@@ -14,8 +14,9 @@
 body {
   -webkit-font-smoothing: antialiased;
   height: 100vh;
+  width: 100vw;
   display: grid;
-  grid-template-columns: 1fr 5fr;
+  grid-template-columns: 15vw 85vw;
   grid-template-rows: 1fr 12fr 1fr;
 }
 
@@ -64,6 +65,9 @@ h4 {
   grid-area: 2 / 2 / 3 / -1;
   background-color: rgb(193, 111, 247);
   margin: var(--margin) var(--margin) var(--margin) var(--half-margin);
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
 }
 
 #footer {
@@ -96,13 +100,15 @@ h4 {
 #project-lists {
   display: flex;
   flex-direction: row;
+  height: 100%;
   margin-left: var(--half-margin);
   margin-right: var(--half-margin);
   overflow: auto;
+  scrollbar-color: purple orange;
 }
 
 .project-col {
-  width: 250px;
+  flex: 0 0 250px;
 }
 
 .todo-box {

@@ -56,6 +56,7 @@ function createToDoDOMElement(todo) {
 
 function displayProjects(projects) {
   let projectDisplay = document.querySelector("#project-lists");
+  projectDisplay.innerHTML = "";
 
   for(let i=0; i<projects.length; i++) {
     let projectCol = document.createElement("div");
@@ -72,6 +73,13 @@ function displayProjects(projects) {
     projectDisplay.appendChild(projectCol);
   }
 }
+
+let newListButton = document.querySelector("#new-list-button");
+newListButton.addEventListener("click", () => {
+  let name = prompt("New list name: ", "New List");
+  createNewProject(name);
+  displayProjects(projects);
+})
 
 //test
 

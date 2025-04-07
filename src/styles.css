@@ -1,5 +1,7 @@
 :root {
   line-height: 1.5;
+  --margin: 12px;
+  --half-margin: 6px;
 }
 
 * {
@@ -10,6 +12,10 @@
 
 body {
   -webkit-font-smoothing: antialiased;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  grid-template-rows: 1fr 12fr 1fr;
 }
 
 img {
@@ -28,4 +34,35 @@ p, h1, h2, h3, h4, h5, h6 {
 
 input, button, textarea, select {
   font: inherit;
+}
+
+h2 {
+  margin: var(--margin) var(--margin) var(--half-margin) var(--margin);
+}
+
+#header {
+  grid-area: 1 / 1 / 2 / -1;
+  margin: var(--margin);
+}
+
+#overview {
+  grid-area: 2 / 1 / 3 / 2;
+  background-color: rgb(247, 199, 111);
+  margin: var(--margin) var(--half-margin) var(--margin) var(--margin);
+}
+
+#projects {
+  grid-area: 2 / 2 / 3 / -1;
+  background-color: rgb(193, 111, 247);
+  margin: var(--margin) var(--margin) var(--margin) var(--half-margin);
+}
+
+#footer {
+  grid-area: 3 / 1 / -1 / -1;
+  margin: var(--margin)
+}
+
+#overview,
+#projects {
+  border-radius: var(--half-margin);
 }

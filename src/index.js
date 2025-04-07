@@ -1,3 +1,5 @@
+import "./styles.css"
+
 class Project {
   constructor(title) {
     this.title = title;
@@ -31,7 +33,54 @@ function createToDo(title, description, priority, dueDate, notes, checklist) {
 function addToDoToProject(project, todo) {
   for(let i=0; i<projects.length; i++) {
     if(projects[i].title === project) {
-      projects[i].push(todo);
+      projects[i].todos.push(todo);
     }
   }
 }
+
+
+function createToDoDOMElement(todo) {
+  let todoBox = document.createElement("div");
+  
+  let todoTitle = document.createElement("h4");
+  todoTitle.textContent = todo.title;
+
+  let todoDesc = document.createElement("p");
+  todoDesc.textContent = todo.description;
+
+  todoBox.appendChild(todoTitle);
+  todoBox.appendChild(todoDesc);
+
+  return todoBox;
+}
+
+function displayProjects(projects) {
+  let projectDisplay = document.querySelector("#projects");
+
+  for(let i=0; i<projects.length; i++) {
+    let projectCol = document.createElement("div");
+    let projectTitle = document.createElement("h3");
+    projectTitle.textContent = projects[i].title;
+    projectCol.appendChild(projectTitle);
+    
+    for(let j=0; j<projects[i].todos.length; j++) {
+      let todo = createToDoDOMElement(projects[i].todos[j]);
+      projectCol.appendChild(todo);
+    }
+    projectDisplay.appendChild(projectCol);
+  }
+}
+
+//test
+
+createNewProject("test list");
+
+let todo1 = createToDo("title", "description", "priority", "dueDate", "notes", "checklist");
+addToDoToProject("test list", todo1);
+
+createNewProject("test list 2");
+
+let todo2 = createToDo("title", "description", "priority", "dueDate", "notes", "checklist");
+addToDoToProject("test list 2", todo2);
+
+displayProjects(projects);

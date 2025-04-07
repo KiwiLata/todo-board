@@ -55,16 +55,18 @@ function createToDoDOMElement(todo) {
 }
 
 function displayProjects(projects) {
-  let projectDisplay = document.querySelector("#projects");
+  let projectDisplay = document.querySelector("#project-lists");
 
   for(let i=0; i<projects.length; i++) {
     let projectCol = document.createElement("div");
     let projectTitle = document.createElement("h3");
     projectTitle.textContent = projects[i].title;
     projectCol.appendChild(projectTitle);
+    projectCol.classList.add("project-col");
     
     for(let j=0; j<projects[i].todos.length; j++) {
       let todo = createToDoDOMElement(projects[i].todos[j]);
+      todo.classList.add("todo-box");
       projectCol.appendChild(todo);
     }
     projectDisplay.appendChild(projectCol);

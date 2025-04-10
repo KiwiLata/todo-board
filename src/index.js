@@ -18,11 +18,11 @@ class ToDo {
   }
 };
 
-let projects = [];
+let allProjects = [];
 
 function createNewProject(title) {
   let newProject = new Project(title);
-  projects.push(newProject);
+  allProjects.push(newProject);
 }
 
 function createToDo(title, description, priority, dueDate, notes, checklist) {
@@ -31,9 +31,9 @@ function createToDo(title, description, priority, dueDate, notes, checklist) {
 }
 
 function addToDoToProject(project, todo) {
-  for(let i=0; i<projects.length; i++) {
-    if(projects[i].title === project) {
-      projects[i].todos.push(todo);
+  for(let i=0; i<allProjects.length; i++) {
+    if(allProjects[i].title === project) {
+      allProjects[i].todos.push(todo);
     }
   }
 }
@@ -54,19 +54,19 @@ function createToDoDOMElement(todo) {
   return todoBox;
 }
 
-function displayProjects(projects) {
+function displayProjects(allProjects) {
   let projectDisplay = document.querySelector("#project-lists");
   projectDisplay.innerHTML = "";
 
-  for(let i=0; i<projects.length; i++) {
+  for(let i=0; i<allProjects.length; i++) {
     let projectCol = document.createElement("div");
     let projectTitle = document.createElement("h3");
-    projectTitle.textContent = projects[i].title;
+    projectTitle.textContent = allProjects[i].title;
     projectCol.appendChild(projectTitle);
     projectCol.classList.add("project-col");
     
-    for(let j=0; j<projects[i].todos.length; j++) {
-      let todo = createToDoDOMElement(projects[i].todos[j]);
+    for(let j=0; j<allProjects[i].todos.length; j++) {
+      let todo = createToDoDOMElement(allProjects[i].todos[j]);
       todo.classList.add("todo-box");
       projectCol.appendChild(todo);
     }
@@ -74,12 +74,55 @@ function displayProjects(projects) {
   }
 }
 
+// buttons and dialog
+
+const newListDialog = document.querySelector("#new-list-dialog");
+const newTaskDialog = document.querySelector("#new-task-dialog");
+
 let newListButton = document.querySelector("#new-list-button");
 newListButton.addEventListener("click", () => {
-  let name = prompt("New list name: ", "New List");
-  createNewProject(name);
-  displayProjects(projects);
-})
+  newListDialog.show();
+  //let name = prompt("New list name: ", "New List");
+  //createNewProject(name);
+  displayProjects(allProjects);
+});
+
+let newTaskButton = document.querySelector("#new-task-button");
+newTaskButton.addEventListener("click", () => {
+  let taskList = document.querySelector("#task-list");
+  for(let i=0; i<allProjects.length; i++) {
+    let option = document.createElement("option");
+    option.setAttribute("value", allProjects[i].title);
+    option.textContent = allProjects[i].title;
+    taskList.appendChild(option);
+  }
+
+  newTaskDialog.show();
+  let createToDoArgs = [];
+  let listName;
+
+  let newTaskForm = document.querySelector("#new-task-form");
+  newTaskForm.addEventListener("submit", (submitForm) => {
+    submitForm.preventDefault();
+    let taskData = new FormData(newTaskForm);
+    let args = [];
+    for (let keyValue of taskData.values()) {
+      args.push(keyValue);
+    }
+    listName = args.shift();
+    createToDoArgs = args;
+
+    let todo = createToDo(...createToDoArgs);
+    addToDoToProject(listName, todo);
+    //let title = prompt("New task title: ", "New Task");
+    //let todo = createToDo(title, "description", "priority", "dueDate", "notes", "checklist");
+    //addToDoToProject("test list", todo);
+    displayProjects(allProjects);
+    newListDialog.close();
+  });
+  
+});
+
 
 //test
 
@@ -93,4 +136,10 @@ createNewProject("test list 2");
 let todo2 = createToDo("title", "description", "priority", "dueDate", "notes", "checklist");
 addToDoToProject("test list 2", todo2);
 
-displayProjects(projects);
+displayProjects(allProjects);
+
+// overview
+
+let currentDate = new Date().toJSON().slice(0, 10);
+let displayedDate = document.querySelector("#current-date");
+displayedDate.textContent = currentDate;

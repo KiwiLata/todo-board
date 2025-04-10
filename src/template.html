@@ -12,7 +12,7 @@
 
   <div id="overview">
     <h2>Overview</h2>
-    <p>Current date: <span id="current-date">2025-04-07</span></p>
+    <p>Current date: <span id="current-date">Something went wrong. We don't know what year we're in.</span></p>
   </div>
 
   <div id="projects">
@@ -21,6 +21,61 @@
       <button type="button" id="new-list-button">New List</button>
       <button type="button" id="new-task-button">New Task</button>
     </div>
+
+    <dialog class="sidebar-dialog" id="new-list-dialog">
+      <form class="new-element">
+        <div class="inputField">
+          <label for="list-title">List title</label>
+          <input type="text" id="list-title" name="list-title">
+        </div>
+        <div class="buttons">
+          <button type="submit" class="submitDialog">Create list</button>
+          <button type="reset" class="resetDialog">Reset</button>
+          <button type="button" class="closeDialog">Close</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog class="sidebar-dialog" id="new-task-dialog">
+      <form class="new-element" id="new-task-form">
+        <div class="inputField">
+          <label for="task-list">Assign to a list</label>
+          <select id="task-list" name="task-list">
+            
+          </select>
+        </div>
+        <div class="inputField">
+          <label for="task-title">Task name</label>
+          <input type="text" id="task-title" name="task-title">
+        </div>
+        <div class="inputField">
+          <label for="task-description">Description</label>
+          <input type="text" id="task-description" name="task-description">
+        </div>
+        <div class="inputField">
+          <label for="task-priority">Priority</label>
+          <input type="number" id="task-priority" name="task-priority">
+        </div>
+        <div class="inputField">
+          <label for="task-due-date">dueDate</label>
+          <input type="date" id="task-due-date" name="task-due-date">
+        </div>
+        <div class="inputField">
+          <label for="task-notes">Notes</label>
+          <input type="text" id="task-notes" name="task-notes">
+        </div>
+        <div class="inputField">
+          <label for="list-title">checklist</label>
+          <input type="text" id="list-title" name="list-title">
+        </div>
+        <div class="buttons">
+          <button type="submit" class="submitDialog">Create task</button>
+          <button type="reset" class="resetDialog">Reset</button>
+          <button type="button" class="closeDialog">Close</button>
+        </div>
+      </form>
+    </dialog>
+
     <div id="project-lists">
 
     </div>

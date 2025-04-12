@@ -89,7 +89,7 @@ h4 {
   margin-right: auto;
 }
 
-.title-bar button {
+.default-button {
   margin: var(--half-margin);
   padding: var(--half-margin);
   background-color: rgb(247, 199, 111);
@@ -119,4 +119,31 @@ h4 {
 
 .todo-box p {
   padding: 0 var(--margin) var(--half-margin) var(--margin);
+}
+
+.sidebar-dialog {
+  padding: var(--margin);
+  width: 30%;
+  min-width: 300px;
+  position: absolute;
+  left: 70%;
+  top: 0;
+  height: 100vh;
+}
+
+.inputField {
+  margin: var(--margin);
+  display: flex;
+  flex-direction: column;
+}
+
+.buttons {
+  display: flex;
+  justify-content: end;
+}
+
+input,
+textarea,
+option {
+  padding: var(--half-margin);
 }

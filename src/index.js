@@ -82,8 +82,6 @@ const newTaskDialog = document.querySelector("#new-task-dialog");
 let newListButton = document.querySelector("#new-list-button");
 newListButton.addEventListener("click", () => {
   newListDialog.show();
-  //let name = prompt("New list name: ", "New List");
-  //createNewProject(name);
   displayProjects(allProjects);
 });
 
@@ -114,13 +112,21 @@ newTaskButton.addEventListener("click", () => {
 
     let todo = createToDo(...createToDoArgs);
     addToDoToProject(listName, todo);
-    //let title = prompt("New task title: ", "New Task");
-    //let todo = createToDo(title, "description", "priority", "dueDate", "notes", "checklist");
-    //addToDoToProject("test list", todo);
     displayProjects(allProjects);
     newListDialog.close();
   });
   
+});
+
+let closeButton = document.querySelectorAll(".closeDialog").forEach((item) => {
+  item.addEventListener("click", () => {
+  if(newListDialog.hasAttribute("open")) {
+    newListDialog.close();
+  }
+  if(newTaskDialog.hasAttribute("open")) {
+    newTaskDialog.close();
+  }
+  });
 });
 
 

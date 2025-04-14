@@ -45,12 +45,27 @@ function createToDoDOMElement(todo) {
   let todoTitle = document.createElement("h4");
   todoTitle.textContent = todo.title;
 
+  let todoDueDate = document.createElement("p");
+  todoDueDate.textContent = todo.dueDate;
+  todoDueDate.classList.add("todo-date");
+
   let todoDesc = document.createElement("p");
   todoDesc.textContent = todo.description;
+  todoDesc.classList.add("todo-wide");
+
+  let todoNotes = document.createElement("p");
+  todoNotes.textContent = todo.notes;
+  todoNotes.classList.add("todo-wide");
+
+  let todoChecklist = document.createElement("p");
+  todoChecklist.textContent = todo.checklist;
+  todoChecklist.classList.add("todo-wide");
 
   todoBox.appendChild(todoTitle);
+  todoBox.appendChild(todoDueDate);
   todoBox.appendChild(todoDesc);
-
+  todoBox.appendChild(todoNotes);
+  todoBox.appendChild(todoChecklist);
   return todoBox;
 }
 
@@ -82,8 +97,21 @@ const newTaskDialog = document.querySelector("#new-task-dialog");
 let newListButton = document.querySelector("#new-list-button");
 newListButton.addEventListener("click", () => {
   newListDialog.show();
-  displayProjects(allProjects);
 });
+
+let newListForm = document.querySelector("#new-list-form");
+newListForm.addEventListener("submit", (submitForm) => {
+    submitForm.preventDefault();
+    let listData = new FormData(newListForm);
+    let args = [];
+    for (let keyValue of listData.values()) {
+      args.push(keyValue);
+    }
+
+    createNewProject(...args);
+    displayProjects(allProjects);
+    newListDialog.close();
+  });
 
 let newTaskButton = document.querySelector("#new-task-button");
 newTaskButton.addEventListener("click", () => {
@@ -96,7 +124,9 @@ newTaskButton.addEventListener("click", () => {
   }
 
   newTaskDialog.show();
-  let createToDoArgs = [];
+});
+
+let createToDoArgs = [];
   let listName;
 
   let newTaskForm = document.querySelector("#new-task-form");
@@ -116,7 +146,6 @@ newTaskButton.addEventListener("click", () => {
     newListDialog.close();
   });
   
-});
 
 let closeButton = document.querySelectorAll(".closeDialog").forEach((item) => {
   item.addEventListener("click", () => {

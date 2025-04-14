@@ -121,10 +121,21 @@ h4 {
   background-color: rgb(247, 199, 111);
   border-radius: var(--half-margin);
   margin: var(--half-margin);
+  display: grid;
+  grid-template-columns: 3fr 1fr;
 }
 
 .todo-box p {
   padding: 0 var(--margin) var(--half-margin) var(--margin);
+}
+
+.todo-box .todo-date {
+  padding: var(--half-margin) var(--margin) var(--half-margin) var(--margin);
+}
+
+.todo-wide {
+  grid-column-start: 1;
+  grid-column-end: 2;
 }
 
 .sidebar-dialog {

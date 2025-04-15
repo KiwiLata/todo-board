@@ -72,15 +72,19 @@ function createToDoDOMElement(todo) {
   todoChecklist.classList.add("todo-wide");
 
   let todoNav = document.createElement("div");
+  let todoDelete = document.createElement("button");
+  todoDelete.textContent = "x";
   let todoUp = document.createElement("button");
   todoUp.textContent = "^";
   let todoDown = document.createElement("button");
   todoDown.textContent = "v";
-  let todoDelete = document.createElement("button");
-  todoDelete.textContent = "x";
+  let todoComplete = document.createElement("button");
+  todoComplete.textContent = "o";
+  todoComplete.classList.add("todo-complete");
+  todoNav.appendChild(todoDelete);
   todoNav.appendChild(todoUp);
   todoNav.appendChild(todoDown);
-  todoNav.appendChild(todoDelete);
+  todoNav.appendChild(todoComplete);
   todoNav.classList.add("todo-nav");
 
   todoBox.appendChild(todoTitle);

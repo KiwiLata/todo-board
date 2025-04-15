@@ -61,11 +61,24 @@ function createToDoDOMElement(todo) {
   todoChecklist.textContent = todo.checklist;
   todoChecklist.classList.add("todo-wide");
 
+  let todoNav = document.createElement("div");
+  let todoUp = document.createElement("button");
+  todoUp.textContent = "^";
+  let todoDown = document.createElement("button");
+  todoDown.textContent = "v";
+  let todoDelete = document.createElement("button");
+  todoDelete.textContent = "x";
+  todoNav.appendChild(todoUp);
+  todoNav.appendChild(todoDown);
+  todoNav.appendChild(todoDelete);
+  todoNav.classList.add("todo-nav");
+
   todoBox.appendChild(todoTitle);
   todoBox.appendChild(todoDueDate);
   todoBox.appendChild(todoDesc);
   todoBox.appendChild(todoNotes);
   todoBox.appendChild(todoChecklist);
+  todoBox.appendChild(todoNav);
   return todoBox;
 }
 
@@ -127,10 +140,10 @@ newTaskButton.addEventListener("click", () => {
 });
 
 let createToDoArgs = [];
-  let listName;
+let listName;
 
-  let newTaskForm = document.querySelector("#new-task-form");
-  newTaskForm.addEventListener("submit", (submitForm) => {
+let newTaskForm = document.querySelector("#new-task-form");
+newTaskForm.addEventListener("submit", (submitForm) => {
     submitForm.preventDefault();
     let taskData = new FormData(newTaskForm);
     let args = [];
@@ -144,7 +157,7 @@ let createToDoArgs = [];
     addToDoToProject(listName, todo);
     displayProjects(allProjects);
     newListDialog.close();
-  });
+});
   
 
 let closeButton = document.querySelectorAll(".closeDialog").forEach((item) => {

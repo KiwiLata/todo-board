@@ -20,9 +20,18 @@ class ToDo {
 
 let allProjects = [];
 
+if(localStorage.getItem("localProjects")) {
+  allProjects = JSON.parse(localStorage.getItem("localProjects"));
+  displayProjects(allProjects);
+}
+else {
+  localStorage.setItem("localProjects", JSON.stringify(allProjects));
+}
+
 function createNewProject(title) {
   let newProject = new Project(title);
   allProjects.push(newProject);
+  localStorage.setItem("localProjects", JSON.stringify(allProjects));
 }
 
 function createToDo(title, description, priority, dueDate, notes, checklist) {
@@ -36,6 +45,7 @@ function addToDoToProject(project, todo) {
       allProjects[i].todos.push(todo);
     }
   }
+  localStorage.setItem("localProjects", JSON.stringify(allProjects));
 }
 
 
@@ -174,7 +184,7 @@ let closeButton = document.querySelectorAll(".closeDialog").forEach((item) => {
 
 //test
 
-createNewProject("test list");
+/* createNewProject("test list");
 
 let todo1 = createToDo("title", "description", "priority", "dueDate", "notes", "checklist");
 addToDoToProject("test list", todo1);
@@ -184,7 +194,7 @@ createNewProject("test list 2");
 let todo2 = createToDo("title", "description", "priority", "dueDate", "notes", "checklist");
 addToDoToProject("test list 2", todo2);
 
-displayProjects(allProjects);
+displayProjects(allProjects); */
 
 // overview
 

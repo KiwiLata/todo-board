@@ -86,6 +86,10 @@ h4 {
   border-radius: var(--half-margin);
 }
 
+#overview p {
+  margin: var(--margin) var(--margin) var(--half-margin) var(--margin);
+}
+
 .title-bar {
   display: flex;
   flex-direction: row;
@@ -188,4 +192,8 @@ option {
 
 label {
   font-weight: bold;
+}
+
+.overdue {
+  background-color: coral;
 }

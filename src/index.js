@@ -58,6 +58,10 @@ function createToDoDOMElement(todo) {
   let todoDueDate = document.createElement("p");
   todoDueDate.textContent = todo.dueDate;
   todoDueDate.classList.add("todo-date");
+  let currentDate = new Date().toJSON().slice(0, 10);
+  if(todo.dueDate < currentDate) {
+    todoDueDate.classList.add("overdue");
+  }
 
   let todoDesc = document.createElement("p");
   todoDesc.textContent = todo.description;
@@ -75,15 +79,20 @@ function createToDoDOMElement(todo) {
   let todoDelete = document.createElement("button");
   todoDelete.textContent = "x";
   todoDelete.classList.add("todo-delete")
-
   todoDelete.addEventListener("click", handleTodoDelete);
 
   let todoUp = document.createElement("button");
   todoUp.textContent = "^";
+  todoUp.addEventListener("click", handleTodoUpPriority);
+
   let todoDown = document.createElement("button");
   todoDown.textContent = "v";
+  todoDown.addEventListener("click", handleTodoDownPriority);
+
   let todoComplete = document.createElement("button");
   todoComplete.textContent = "o";
+  todoComplete.addEventListener("click", handleTodoDelete);
+
   todoComplete.classList.add("todo-complete");
   todoNav.appendChild(todoDelete);
   todoNav.appendChild(todoUp);
@@ -117,6 +126,12 @@ function displayProjects(allProjects) {
       todo.classList.add("todo-box");
       projectCol.appendChild(todo);
     }
+
+    let deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete list";
+    deleteButton.addEventListener("click", handleListDelete);
+    projectCol.appendChild(deleteButton);
+
     projectDisplay.appendChild(projectCol);
   }
 }
@@ -127,8 +142,6 @@ function handleTodoDelete(ev) {
     let todoBox = ev.target.parentNode.parentNode;
     let title = todoBox.parentNode.firstChild.textContent;
     let todoName = todoBox.firstChild.textContent;
-
-    console.log(todoBox, title, todoName);
 
     let todoList = [];
     let listIndex = undefined;
@@ -144,11 +157,89 @@ function handleTodoDelete(ev) {
         todoIndex = i;
       }
     }
-    
+
     allProjects[listIndex].todos.splice(todoIndex, 1);
+    localStorage.setItem("localProjects", JSON.stringify(allProjects))
     displayProjects(allProjects);
 }
 
+function handleTodoUpPriority(ev) {
+    let todoBox = ev.target.parentNode.parentNode;
+    let title = todoBox.parentNode.firstChild.textContent;
+    let todoName = todoBox.firstChild.textContent;
+
+    let todoList = [];
+    let listIndex = undefined;
+    let todoIndex = undefined;
+    for(let i=0; i<allProjects.length; i++) {
+      if(allProjects[i].title === title) {
+        todoList = allProjects[i].todos;
+        listIndex = i;
+      }
+    }
+    for(let i=0; i<todoList.length; i++) {
+      if(todoList[i].title === todoName) {
+        todoIndex = i;
+      }
+    }
+    console.log("before " + allProjects[listIndex].todos[todoIndex].priority);
+    if(allProjects[listIndex].todos[todoIndex].priority) {
+      allProjects[listIndex].todos[todoIndex].priority += 1;
+    }
+    else {
+      allProjects[listIndex].todos[todoIndex].priority = 1;
+    }
+    console.log("after " + allProjects[listIndex].todos[todoIndex].priority);
+    localStorage.setItem("localProjects", JSON.stringify(allProjects))
+    displayProjects(allProjects);
+}
+
+function handleTodoDownPriority(ev) {
+    let todoBox = ev.target.parentNode.parentNode;
+    let title = todoBox.parentNode.firstChild.textContent;
+    let todoName = todoBox.firstChild.textContent;
+
+    let todoList = [];
+    let listIndex = undefined;
+    let todoIndex = undefined;
+    for(let i=0; i<allProjects.length; i++) {
+      if(allProjects[i].title === title) {
+        todoList = allProjects[i].todos;
+        listIndex = i;
+      }
+    }
+    for(let i=0; i<todoList.length; i++) {
+      if(todoList[i].title === todoName) {
+        todoIndex = i;
+      }
+    }
+    console.log("before " + allProjects[listIndex].todos[todoIndex].priority);
+    if(allProjects[listIndex].todos[todoIndex].priority) {
+      allProjects[listIndex].todos[todoIndex].priority -= 1;
+    }
+    else {
+      allProjects[listIndex].todos[todoIndex].priority = 0;
+    }
+    console.log("after " + allProjects[listIndex].todos[todoIndex].priority);
+    localStorage.setItem("localProjects", JSON.stringify(allProjects))
+    displayProjects(allProjects);
+}
+
+function handleListDelete(ev) {
+    let list = ev.target.parentNode.parentNode;
+    let title = list.parentNode.firstChild.textContent;
+
+    let listIndex = undefined;
+    for(let i=0; i<allProjects.length; i++) {
+      if(allProjects[i].title === title) {
+        listIndex = i;
+      }
+    }
+
+    allProjects.splice(listIndex, 1);
+    localStorage.setItem("localProjects", JSON.stringify(allProjects))
+    displayProjects(allProjects);
+}
 
 // buttons and dialog
 

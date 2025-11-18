@@ -74,6 +74,10 @@ function createToDoDOMElement(todo) {
   let todoNav = document.createElement("div");
   let todoDelete = document.createElement("button");
   todoDelete.textContent = "x";
+  todoDelete.classList.add("todo-delete")
+
+  todoDelete.addEventListener("click", handleTodoDelete);
+
   let todoUp = document.createElement("button");
   todoUp.textContent = "^";
   let todoDown = document.createElement("button");
@@ -93,6 +97,7 @@ function createToDoDOMElement(todo) {
   todoBox.appendChild(todoNotes);
   todoBox.appendChild(todoChecklist);
   todoBox.appendChild(todoNav);
+
   return todoBox;
 }
 
@@ -115,6 +120,35 @@ function displayProjects(allProjects) {
     projectDisplay.appendChild(projectCol);
   }
 }
+
+// task buttons
+
+function handleTodoDelete(ev) {
+    let todoBox = ev.target.parentNode.parentNode;
+    let title = todoBox.parentNode.firstChild.textContent;
+    let todoName = todoBox.firstChild.textContent;
+
+    console.log(todoBox, title, todoName);
+
+    let todoList = [];
+    let listIndex = undefined;
+    let todoIndex = undefined;
+    for(let i=0; i<allProjects.length; i++) {
+      if(allProjects[i].title === title) {
+        todoList = allProjects[i].todos;
+        listIndex = i;
+      }
+    }
+    for(let i=0; i<todoList.length; i++) {
+      if(todoList[i].title === todoName) {
+        todoIndex = i;
+      }
+    }
+    
+    allProjects[listIndex].todos.splice(todoIndex, 1);
+    displayProjects(allProjects);
+}
+
 
 // buttons and dialog
 

@@ -114,6 +114,7 @@ function displayProjects(allProjects) {
   let projectDisplay = document.querySelector("#project-lists");
   projectDisplay.innerHTML = "";
 
+
   for(let i=0; i<allProjects.length; i++) {
     let projectCol = document.createElement("div");
     let projectTitle = document.createElement("h3");
@@ -121,6 +122,10 @@ function displayProjects(allProjects) {
     projectCol.appendChild(projectTitle);
     projectCol.classList.add("project-col");
     
+    
+    allProjects[i].todos.sort((a, b) => b.priority - a.priority);
+    localStorage.setItem("localProjects", JSON.stringify(allProjects))
+
     for(let j=0; j<allProjects[i].todos.length; j++) {
       let todo = createToDoDOMElement(allProjects[i].todos[j]);
       todo.classList.add("todo-box");
@@ -184,12 +189,13 @@ function handleTodoUpPriority(ev) {
     }
     console.log("before " + allProjects[listIndex].todos[todoIndex].priority);
     if(allProjects[listIndex].todos[todoIndex].priority) {
-      allProjects[listIndex].todos[todoIndex].priority += 1;
+      allProjects[listIndex].todos[todoIndex].priority = parseInt(allProjects[listIndex].todos[todoIndex].priority) + 1;
     }
     else {
       allProjects[listIndex].todos[todoIndex].priority = 1;
     }
     console.log("after " + allProjects[listIndex].todos[todoIndex].priority);
+    
     localStorage.setItem("localProjects", JSON.stringify(allProjects))
     displayProjects(allProjects);
 }
@@ -215,7 +221,7 @@ function handleTodoDownPriority(ev) {
     }
     console.log("before " + allProjects[listIndex].todos[todoIndex].priority);
     if(allProjects[listIndex].todos[todoIndex].priority) {
-      allProjects[listIndex].todos[todoIndex].priority -= 1;
+      allProjects[listIndex].todos[todoIndex].priority = parseInt(allProjects[listIndex].todos[todoIndex].priority) - 1;
     }
     else {
       allProjects[listIndex].todos[todoIndex].priority = 0;

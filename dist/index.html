@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To Do List</title>
+<script defer src="main.js"></script></head>
+<body>
+  <div id="header">
+    <h1>To Do List</h1>
+  </div>
+
+  <div id="overview">
+    <h2>Overview</h2>
+    <p>Current date: <span id="current-date">Something went wrong. We don't know what year we're in.</span></p>
+    <div>
+      <p>Due today: <span id="due-today"></span></p>
+      <p>Due this week: <span id="due-this-week"></span></p>
+      <p>Overdue: <span id="overdue"></span></p>
+    </div>
+  </div>
+
+  <div id="projects">
+    <div class="title-bar">
+      <h2>Projects</h2>
+      <button type="button" id="new-list-button" class="default-button">New List</button>
+      <button type="button" id="new-task-button" class="default-button">New Task</button>
+    </div>
+
+    <dialog class="sidebar-dialog" id="new-list-dialog">
+      <form class="new-element" id="new-list-form">
+        <div class="inputField">
+          <label for="list-title">List title</label>
+          <input type="text" id="list-title" name="list-title">
+        </div>
+        <div class="buttons">
+          <button type="submit" class="default-button submitDialog">Create list</button>
+          <button type="reset" class="default-button resetDialog">Reset</button>
+          <button type="button" class="default-button closeDialog">Close</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog class="sidebar-dialog" id="new-task-dialog">
+      <form class="new-element" id="new-task-form">
+        <div class="inputField">
+          <label for="task-list">Assign to a list</label>
+          <select id="task-list" name="task-list">
+            
+          </select>
+        </div>
+        <div class="inputField">
+          <label for="task-title">Task name</label>
+          <input type="text" id="task-title" name="task-title">
+        </div>
+        <div class="inputField">
+          <label for="task-description">Description</label>
+          <textarea id="task-description" name="task-description" rows="3"></textarea>
+        </div>
+        <div class="inputField">
+          <label for="task-priority">Priority</label>
+          <input type="number" id="task-priority" name="task-priority">
+        </div>
+        <div class="inputField">
+          <label for="task-due-date">Due date</label>
+          <input type="date" id="task-due-date" name="task-due-date">
+        </div>
+        <div class="inputField">
+          <label for="task-notes">Notes</label>
+          <textarea id="task-notes" name="task-notes" rows="3"></textarea>
+        </div>
+        <div class="inputField">
+          <label for="task-checklist">Checklist</label>
+          <textarea id="task-checklist" name="task-checklist"></textarea>
+        </div>
+        <div class="buttons">
+          <button type="submit" class="default-button submitDialog">Create task</button>
+          <button type="reset" class="default-button resetDialog">Reset</button>
+          <button type="button" class="default-button closeDialog">Close</button>
+        </div>
+      </form>
+    </dialog>
+
+    <div id="project-lists">
+
+    </div>
+  </div>
+
+  <div id="footer">
+    &copy; Copyright 2025 KiwiLata
+  </div>
+</body>
+</html>

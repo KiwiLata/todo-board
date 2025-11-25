@@ -142,6 +142,30 @@ h4 {
   grid-column-end: 3;
 }
 
+.collapsible-title {
+  padding: 0 var(--margin) var(--half-margin) var(--margin);
+}
+
+.collapsible-title:after {
+  content: ' [+]';
+}
+
+.active-title:after {
+  content: ' [-]';
+}
+
+.collapsible-title:hover {
+  background-color: rgb(232, 155, 73);;
+}
+
+.collapsible {
+  display: none;
+}
+
+.active {
+  display: block;
+}
+
 .todo-nav {
   grid-area: 5 / -1 / 6 / -2;
   margin-bottom: var(--margin);
@@ -196,4 +220,5 @@ label {
 
 .overdue {
   background-color: coral;
+  border-radius: var(--half-margin);
 }

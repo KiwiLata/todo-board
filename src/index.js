@@ -28,6 +28,38 @@ else {
   localStorage.setItem("localProjects", JSON.stringify(allProjects));
 }
 
+function countDueTodos(allProjects) {
+  let due_today_count = 0;
+  let due_this_week_count = 0;
+  let overdue_count = 0;
+
+  let due_today = document.querySelector("#due-today");
+  let due_this_week = document.querySelector("#due-this-week");
+  let overdue = document.querySelector("#overdue");
+
+  let today = new Date().toJSON().slice(0, 10);
+  let temp = new Date();
+  let this_week = new Date(temp.setDate(temp.getDate() + 7)).toJSON().slice(0, 10);
+
+  for(let i=0; i<allProjects.length; i++) {
+    for(let j=0; j<allProjects[i].todos.length; j++) {
+      let due_date = allProjects[i].todos[j].dueDate;
+      if(due_date == today) {
+        due_today_count += 1;
+      }
+      else if(due_date > today && due_date <= this_week) {
+        due_this_week_count += 1;
+      }
+      else if(due_date < today) {
+        overdue_count += 1;
+      }
+    }
+  }
+  due_today.textContent = due_today_count;
+  due_this_week.textContent = due_this_week_count;
+  overdue.textContent = overdue_count;
+}
+
 function createNewProject(title) {
   let newProject = new Project(title);
   allProjects.push(newProject);
@@ -63,6 +95,14 @@ function createToDoDOMElement(todo) {
     todoDueDate.classList.add("overdue");
   }
 
+  let todoCollapsible = document.createElement("div");
+  todoCollapsible.classList.add("todo-wide", "collapsible");
+
+  let todoCollapsibleTitle = document.createElement("h5");
+  todoCollapsibleTitle.textContent = "Details";
+  todoCollapsibleTitle.classList.add("todo-wide", "collapsible-title");
+  todoCollapsibleTitle.addEventListener("click", handleCollapsible);
+
   let todoDesc = document.createElement("p");
   todoDesc.textContent = todo.description;
   todoDesc.classList.add("todo-wide");
@@ -74,6 +114,10 @@ function createToDoDOMElement(todo) {
   let todoChecklist = document.createElement("p");
   todoChecklist.textContent = todo.checklist;
   todoChecklist.classList.add("todo-wide");
+
+  todoCollapsible.appendChild(todoDesc);
+  todoCollapsible.appendChild(todoNotes);
+  todoCollapsible.appendChild(todoChecklist);
 
   let todoNav = document.createElement("div");
   let todoDelete = document.createElement("button");
@@ -102,9 +146,8 @@ function createToDoDOMElement(todo) {
 
   todoBox.appendChild(todoTitle);
   todoBox.appendChild(todoDueDate);
-  todoBox.appendChild(todoDesc);
-  todoBox.appendChild(todoNotes);
-  todoBox.appendChild(todoChecklist);
+  todoBox.appendChild(todoCollapsibleTitle);
+  todoBox.appendChild(todoCollapsible);
   todoBox.appendChild(todoNav);
 
   return todoBox;
@@ -134,11 +177,13 @@ function displayProjects(allProjects) {
 
     let deleteButton = document.createElement("button");
     deleteButton.textContent = "Delete list";
+    deleteButton.classList.add("default-button");
     deleteButton.addEventListener("click", handleListDelete);
     projectCol.appendChild(deleteButton);
 
     projectDisplay.appendChild(projectCol);
   }
+  countDueTodos(allProjects)
 }
 
 // task buttons
@@ -245,6 +290,13 @@ function handleListDelete(ev) {
     allProjects.splice(listIndex, 1);
     localStorage.setItem("localProjects", JSON.stringify(allProjects))
     displayProjects(allProjects);
+}
+
+function handleCollapsible(ev) {
+    let detailsTitle = ev.target;
+    let details = ev.target.nextElementSibling;
+    detailsTitle.classList.toggle("active-title");
+    details.classList.toggle("active");
 }
 
 // buttons and dialog
